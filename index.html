@@ -332,18 +332,18 @@
 <ul>
 <li><code>./config/Console/AutoLogin.yml</code> 文件包含自动登录的相关配置。</li>
 <li><code>./config/net.mamoe.mirai-api-http/setting.yml</code> 文件包含 mirai-api-http 插件的相关配置。安装该插件并运行 mirai-console 之后才会生成此文件。</li>
-<li><code>./plugins</code> 文件夹用于存放 mirai-console 插件。</li>
+<li><code>./plugins</code> 文件夹用于存放 mirai-console 插件。mirai-console 启动后会自动加载该文件夹中的插件。</li>
 </ul>
 <blockquote>
-<p>mirai-console 插件可以在 <a target="_blank" rel="noopener" href="https://mirai.mamoe.net/category/11/%E6%8F%92%E4%BB%B6%E5%8F%91%E5%B8%83">Mirai 论坛</a> 下载。</p>
+<p>mirai-console 的插件可以在 <a target="_blank" rel="noopener" href="https://mirai.mamoe.net/category/11/%E6%8F%92%E4%BB%B6%E5%8F%91%E5%B8%83">Mirai 论坛</a> 下载。</p>
 </blockquote>
 <h3 id="4-安装-AliceBot"><a href="#4-安装-AliceBot" class="headerlink" title="4.安装 AliceBot"></a>4.安装 AliceBot</h3><p>使用 pip 安装即可。<br>安装 alicebot：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install alicebot</span><br></pre></td></tr></table></figure>
 <p>安装 alicebot-adapter-mirai：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install alicebot-adapter-mirai</span><br></pre></td></tr></table></figure>
 <h3 id="5-配置-AliceBot"><a href="#5-配置-AliceBot" class="headerlink" title="5.配置 AliceBot"></a>5.配置 AliceBot</h3><p>在配置 AliceBot 之前建议先了解其<a target="_blank" rel="noopener" href="https://docs.alicebot.dev/guide/index.html">工作原理</a>。<br>AliceBot 是 Python 库，并非独立运行的软件，我们需要编写 Python 脚本并调用 AliceBot 库来实现一个机器人。<br>可以参照其<a target="_blank" rel="noopener" href="https://docs.alicebot.dev/guide/getting-started.html">开发文档（快速上手）</a>编写一个简单的 AliceBot 项目。</p>
-<p>要让 AliceBot 正常工作，必须对 AliceBot 和 Mirai 进行配置，让它们能够正确地通信，详细配置方式参照其<a target="_blank" rel="noopener" href="https://docs.alicebot.dev/guide/basic-config.html">开发文档（基本配置）</a>和<a target="_blank" rel="noopener" href="https://docs.alicebot.dev/guide/mirai-adapter.html">开发文档（Mirai 协议适配器）</a>。<br>配置的关键之处在于让 AliceBot 和 Mirai 选择同一套网络协议，并且使用相同的 <code>verify_key</code>。</p>
-<h3 id="6-运行"><a href="#6-运行" class="headerlink" title="6.运行"></a>6.运行</h3><p>mirai-console 和 AliceBot 机器人脚本是两个独立的程序，它们之间通过本地网络接口通信。<br>因此，在运行机器人时，我们必须同时运行两个程序。<br>至于两个程序的存放路径则是无关紧要的，我们可以把它们放在同一目录下，也可以不这么做。<br>我们可以将自己或他人编写的 AliceBot 插件放在其指定的插件目录下，它就会自动运行该插件。<br>AliceBot 插件的编写方式参考<a target="_blank" rel="noopener" href="https://docs.alicebot.dev/guide/plugin-basics.html">开发文档(插件基础)</a>。</p>
+<p>要让 AliceBot 正常工作，必须先对 AliceBot 和 Mirai 进行配置，让它们能够正确地通信，详细配置方式参照其<a target="_blank" rel="noopener" href="https://docs.alicebot.dev/guide/basic-config.html">开发文档（基本配置）</a>和<a target="_blank" rel="noopener" href="https://docs.alicebot.dev/guide/mirai-adapter.html">开发文档（Mirai 协议适配器）</a>。<br>配置的关键之处在于让 AliceBot 和 Mirai 选择同一套网络协议，并且使用相同的 <code>verify_key</code>。</p>
+<h3 id="6-运行"><a href="#6-运行" class="headerlink" title="6.运行"></a>6.运行</h3><p>mirai-console 和 AliceBot 机器人脚本是两个独立的程序，它们之间通过本地网络接口通信。<br>因此，在运行机器人时，我们必须同时运行两个程序。<br>至于两个程序的存放路径则是无关紧要的，我们可以把它们放在同一目录下，也可以不这么做。<br>我们可以将自己或他人编写的 AliceBot 插件放在指定的插件目录下，它就会自动运行该插件。<br>AliceBot 插件的编写方式参考<a target="_blank" rel="noopener" href="https://docs.alicebot.dev/guide/plugin-basics.html">开发文档(插件基础)</a>。</p>
 
       
 
