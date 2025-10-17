@@ -1,0 +1,1021 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Feng">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、基本假设 1.生产过程 我们首先假设，一个经济体在超长期中的生产过程，可以被分成无数个相继发生的短期生产过程。 在经济体的每一期生产过程中，都有一定量的资本和劳动相结合，在一定的技术条件下，生产出一定量的产品。 这些产品一部分用于这一期的消费，还有一部分用于投资，为下一期的生产做准备。 单个短期生产过程的图示为： flowchart LR capital(资本 K) &amp; labour(">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Solow 增长模型">
+<meta property="og:url" content="https://fengnkt.github.io/2023/02/11/solow-model/index.html">
+<meta property="og:site_name" content="Feng 的个人博客">
+<meta property="og:description" content="一、基本假设 1.生产过程 我们首先假设，一个经济体在超长期中的生产过程，可以被分成无数个相继发生的短期生产过程。 在经济体的每一期生产过程中，都有一定量的资本和劳动相结合，在一定的技术条件下，生产出一定量的产品。 这些产品一部分用于这一期的消费，还有一部分用于投资，为下一期的生产做准备。 单个短期生产过程的图示为： flowchart LR capital(资本 K) &amp; labour(">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-02-11T10:45:57.000Z">
+<meta property="article:modified_time" content="2025-10-17T09:30:22.748Z">
+<meta property="article:author" content="Feng">
+<meta property="article:tag" content="宏观经济学">
+<meta property="article:tag" content="西方经济学">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Solow 增长模型 - Feng 的个人博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"fengnkt.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Feng 的个人博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Solow 增长模型"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-02-11 18:45" pubdate>
+          2023年2月11日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          19 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Solow 增长模型</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="一基本假设">一、基本假设</h2>
+<h3 id="生产过程">1.生产过程</h3>
+<p>我们首先假设，一个经济体在超长期中的生产过程，可以被分成无数个相继发生的短期生产过程。
+在经济体的每一期生产过程中，都有一定量的资本和劳动相结合，在一定的技术条件下，生产出一定量的产品。
+这些产品一部分用于这一期的消费，还有一部分用于投资，为下一期的生产做准备。</p>
+<p>单个短期生产过程的图示为： <pre><code class=" mermaid">flowchart LR
+capital(资本 K) &amp; labour(劳动 L) &amp; efficiency(劳动效率 E) --&gt; factors(生产要素) -- 生产过程 --&gt; product(产出 Y) --&gt; investment(投资 I) &amp; consumption(消费 C)
+</code></pre></p>
+<p>首先考虑离散情形。 我们假设每一期生产过程所用时长均为 <span
+class="math inline"><em>h</em></span>。
+上述所有量首先可以被分为两类：</p>
+<ul>
+<li>存量：<span
+class="math inline"><em>K</em>, <em>L</em>, <em>E</em></span></li>
+<li>流量：<span
+class="math inline"><em>Y</em>, <em>I</em>, <em>C</em></span></li>
+</ul>
+<p>我们认为这些量都是 <span class="math inline"><em>t</em></span>
+的函数，但是其含义却不尽相同：</p>
+<ul>
+<li>对于存量而言，它的含义是 <span class="math inline"><em>t</em></span>
+时刻该存量有多少；</li>
+<li>对于流量而言，它的含义是 <span
+class="math inline">[<em>t</em>, <em>t</em> + <em>h</em>)</span>
+时间段内该流量有多少。</li>
+</ul>
+<p>下面考虑连续情形，即 <span class="math inline"><em>h</em> → 0</span>
+的情形。
+此时每个生产过程耗费的时间都是无穷小量，故其对应的产出、投资、消费也是无穷小量。
+为了让这些量仍然具有意义，我们必须修改它们的定义，即将流量修改为该变量在
+<span class="math inline"><em>t</em></span> 时刻的增长速率。</p>
+<h3 id="生产函数">2.生产函数</h3>
+<h4 id="总生产函数">2.1.总生产函数</h4>
+<p>我们假设生产要素和产出之间存在函数关系，称作总生产函数 <span
+class="math inline"><em>F</em></span>。 具体来说，<span
+class="math inline"><em>F</em></span> 的定义是 <span
+class="math display">$$
+\begin{align*}
+    F:\mathbb{R}\times\mathbb{R}&amp;\to\mathbb{R}\\
+    (K,LE)&amp;\to Y.
+\end{align*}
+$$</span> 在离散情形下，<span class="math inline"><em>F</em></span> 将
+<span class="math inline"><em>t</em></span> 时刻的资本和有效工人对应到了
+<span class="math inline">[<em>t</em>, <em>t</em> + <em>h</em>)</span>
+时间段内的产出； 在连续情形下，<span
+class="math inline"><em>F</em></span> 将 <span
+class="math inline"><em>t</em></span> 时刻的资本和有效工人对应到了 <span
+class="math inline"><em>t</em></span> 时刻产出的增长速率。</p>
+<p>为了方便研究，我们假设连续情形下 <span
+class="math inline"><em>F</em></span> 是可微的。</p>
+<h4 id="规模报酬不变">2.2.规模报酬不变</h4>
+<p>我们假设总生产函数具有规模报酬不变性质，即如果等比例地增加生产要素，产出也会按相同比例增加。
+在数学上，这意味着 <span class="math inline"><em>F</em></span>
+具有齐次性，即对任意的实数 <span
+class="math inline"><em>x</em>, <em>y</em>, <em>λ</em></span> 有 <span
+class="math inline"><em>F</em>(<em>λ</em><em>x</em>,<em>λ</em><em>y</em>) = <em>λ</em><em>F</em>(<em>x</em>,<em>y</em>)</span>。</p>
+<h4 id="总资本边际产量">2.3.总资本边际产量</h4>
+<p>在离散情形下，资本的边际产量 <span class="math inline">MPK</span>
+是生产要素组合的函数，含义是在该要素组合下，增加一单位资本带来的额外产出，即
+<span
+class="math display">MPK(<em>K</em>,<em>L</em><em>E</em>) := <em>F</em>(<em>K</em>+1,<em>L</em><em>E</em>) − <em>F</em>(<em>K</em>,<em>L</em><em>E</em>).</span></p>
+<p>很明显，在连续情形下，<span class="math inline">MPK</span> 的定义是
+<span
+class="math display">MPK(<em>K</em>,<em>L</em><em>E</em>) := <em>F</em><sub>1</sub>(<em>K</em>,<em>L</em><em>E</em>).</span></p>
+<h4 id="人均总生产函数">2.4.人均总生产函数</h4>
+<p>在 Solow
+模型中，我们十分关注人均情形，但这里的人均情形是有效工人意义下的人均，例如人均资本被定义为总资本比有效工人，即人均资本
+<span class="math inline">$k:=\frac{K}{LE}$</span>。</p>
+<p>由总生产函数的齐次性，不难得到 <span class="math display">$$
+y=\frac{Y}{LE}=\frac{1}{LE}F(K,LE)=F\left(\frac{K}{LE},1\right)=F(k,1).
+$$</span></p>
+<p>但我们并不能就此断言 <span class="math inline"><em>k</em></span> 与
+<span class="math inline"><em>y</em></span> 之间存在函数关系。 因为
+<span class="math inline"><em>k</em></span>
+对应的可能生产要素组合构成了集合 <span
+class="math inline">{(<em>λ</em><em>k</em>,<em>λ</em>)|<em>λ</em> ∈ ℝ}</span>，即该集合中每一种生产要素组合对应的人均资本都是
+<span class="math inline"><em>k</em></span>。
+我们必须证明，对集合中的每一种生产要素组合，其对应的人均产量 <span
+class="math inline"><em>y</em></span> 都是相同的，这样 <span
+class="math inline"><em>k</em></span> 和 <span
+class="math inline"><em>y</em></span> 之间才存在函数关系。 否则，若一个
+<span class="math inline"><em>k</em></span> 对应了多个 <span
+class="math inline"><em>y</em></span>，则两者之间不存在函数关系。</p>
+<p><em>证明：</em> 因为 <span class="math display">$$
+y=\frac{1}{\lambda}F(\lambda k,\lambda)=F(k,1),
+$$</span> 所以所有可能生产要素组合的 <span
+class="math inline"><em>y</em></span> 的值都等于 <span
+class="math inline"><em>F</em>(<em>k</em>,1)</span>，因而 <span
+class="math inline"><em>k</em></span> 和 <span
+class="math inline"><em>y</em></span> 之间存在函数关系。</p>
+<p><em>证毕。</em></p>
+<p>不妨将该函数记作 <span
+class="math inline"><em>f</em></span>，称作人均总生产函数，即 <span
+class="math display"><em>f</em>(<em>k</em>) := <em>F</em>(<em>k</em>,1).</span></p>
+<h4 id="人均资本边际产量">2.5.人均资本边际产量</h4>
+<p>与总生产函数类似，我们也可以为人均总生产函数定义资本边际产量。
+离散情形： <span
+class="math display">MPK(<em>k</em>) := <em>f</em>(<em>k</em>+1) − <em>f</em>(<em>k</em>).</span></p>
+<p>连续情形： <span
+class="math display">MPK(<em>k</em>) := <em>f</em>′(<em>k</em>).</span></p>
+<p>这里就产生了一个问题：人均情形的 <span class="math inline">MPK</span>
+和总的情形的 <span class="math inline">MPK</span> 的关系是什么。
+对于离散情形，两者并不存在确切的数量关系。 下面考虑连续情形：</p>
+<blockquote>
+<p>引理：若函数 <span class="math inline"><em>g</em></span> 是 <span
+class="math inline"><em>k</em></span> 阶齐次的，那么它的任一偏导数 <span
+class="math inline">∂<em>g</em>/∂<em>x</em><sub><em>i</em></sub></span>
+是 <span class="math inline"><em>k</em> − 1</span> 阶齐次的。</p>
+</blockquote>
+<p>因为总生产函数 <span class="math inline"><em>F</em></span>
+是一阶齐次的（即齐次函数），所以 <span
+class="math inline"><em>F</em></span> 的偏导数 <span
+class="math inline"><em>F</em><sub>1</sub></span>
+是零阶齐次的，这意味着对任意的实数 <span
+class="math inline"><em>k</em>, <em>λ</em></span> 有 <span
+class="math display">MPK(<em>λ</em><em>k</em>,<em>λ</em>) = <em>F</em><sub>1</sub>(<em>λ</em><em>k</em>,<em>λ</em>) = <em>F</em><sub>1</sub>(<em>k</em>,1) = <em>f</em>′(<em>k</em>) = MPK(<em>k</em>).</span>
+由此可以看出，人均资本 <span class="math inline"><em>k</em></span> 的
+<span class="math inline">MPK</span>，与其对应的各种总的生产要素组合
+<span class="math inline">(<em>λ</em><em>k</em>,<em>λ</em>)</span> 的
+<span class="math inline">MPK</span> 是相同的。</p>
+<h3 id="符号表">3.符号表</h3>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">含义</th>
+<th style="text-align: center;">符号</th>
+<th style="text-align: center;">定义</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">社会总资本</td>
+<td style="text-align: center;"><span
+class="math inline"><em>K</em></span></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">人均资本</td>
+<td style="text-align: center;"><span
+class="math inline"><em>k</em></span></td>
+<td style="text-align: center;"><span
+class="math inline">$\frac{K}{LE}$</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">社会总劳动</td>
+<td style="text-align: center;"><span
+class="math inline"><em>L</em></span></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">社会总产出</td>
+<td style="text-align: center;"><span
+class="math inline"><em>Y</em></span></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">人均产出</td>
+<td style="text-align: center;"><span
+class="math inline"><em>y</em></span></td>
+<td style="text-align: center;"><span
+class="math inline">$\frac{Y}{LE}$</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">社会总投资</td>
+<td style="text-align: center;"><span
+class="math inline"><em>I</em></span></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">人均投资</td>
+<td style="text-align: center;"><span
+class="math inline"><em>i</em></span></td>
+<td style="text-align: center;"><span
+class="math inline">$\frac{I}{LE}$</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">社会总消费</td>
+<td style="text-align: center;"><span
+class="math inline"><em>C</em></span></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">人均消费</td>
+<td style="text-align: center;"><span
+class="math inline"><em>c</em></span></td>
+<td style="text-align: center;"><span
+class="math inline">$\frac{C}{LE}$</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">劳动效率</td>
+<td style="text-align: center;"><span
+class="math inline"><em>E</em></span></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">总生产函数</td>
+<td style="text-align: center;"><span
+class="math inline"><em>F</em></span></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">人均总生产函数</td>
+<td style="text-align: center;"><span
+class="math inline"><em>f</em></span></td>
+<td style="text-align: center;"><span
+class="math inline"><em>f</em>(<em>k</em>) := <em>F</em>(<em>k</em>,1)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">储蓄率</td>
+<td style="text-align: center;"><span
+class="math inline"><em>s</em></span></td>
+<td style="text-align: center;">产出中未消费的比例</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">折旧率</td>
+<td style="text-align: center;"><span
+class="math inline"><em>δ</em></span></td>
+<td style="text-align: center;">资本损耗的比例</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">劳动力增长率</td>
+<td style="text-align: center;"><span
+class="math inline"><em>n</em></span></td>
+<td style="text-align: center;"><span class="math inline">$\frac{\Delta
+L}{L}$</span> 或 <span class="math inline">$\frac{L'}{L}$</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">劳动效率增长率</td>
+<td style="text-align: center;"><span
+class="math inline"><em>g</em></span></td>
+<td style="text-align: center;"><span class="math inline">$\frac{\Delta
+E}{E}$</span> 或 <span class="math inline">$\frac{E'}{E}$</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">资本边际产量</td>
+<td style="text-align: center;"><span
+class="math inline">MPK</span></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="二资本增长方程">二、资本增长方程</h2>
+<p>Solow 模型描述了资本的增长规律，本节探讨的资本增长方程是 Solow
+模型最核心的部分。</p>
+<h3 id="资本的增长过程">1.资本的增长过程</h3>
+<p>如果我们把资本看作单个生产过程的起点，那么整个过程就变为资本的增长过程：
+<pre><code class=" mermaid">flowchart TB
+    capital(资本) -- 投入生产 --&gt; factors(生产要素) -- 生产 --&gt; product(产品) --&gt; investment(投资) -- 资本更新 --&gt; capital(资本)
+</code></pre></p>
+<p>如果我们进一步将资本以外的环节全部抽象成生产过程，资本的增长过程就变为：
+<pre><code class=" mermaid">flowchart TB
+    capital(资本) --投入生产--&gt; produce(生产)
+    produce(生产) --资本更新--&gt; capital(资本)
+</code></pre></p>
+<p>资本首先作为生产要素进入生产过程。
+资本在生产过程中资本会有一定的损耗，称作<strong>资本折旧</strong>，这是资本在增长过程中减少的部分。
+生产出的产品一部分用于消费，另一部分用于<strong>投资</strong>，这是资本在增长过程中增加的部分。
+Solow
+模型最核心的思想是，资本净增长等于投资（增加的部分）减去资本折旧（减少的部分），即：
+<span class="math display">资本增量 = 投资 − 资本折旧.</span></p>
+<p>产出中未消费的比例称作<strong>储蓄率</strong> <span
+class="math inline"><em>s</em></span>，所以每次生产完成后未消费的产出的量是
+<span class="math inline"><em>s</em><em>Y</em></span>。 根据<a
+target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Saving_identity">储蓄-投资恒等式</a>，未消费的部分即投资，所以投资的量也是
+<span class="math inline"><em>s</em><em>Y</em></span>。</p>
+<p>资本折旧占资本的比例称作<strong>折旧率</strong> <span
+class="math inline"><em>δ</em></span>，所以每次生产损耗的资本是 <span
+class="math inline"><em>δ</em><em>K</em></span>。</p>
+<h3 id="总资本增长方程">2.总资本增长方程</h3>
+<p>首先考虑离散情形。 用符号代替上面的资本增长方程，就得到： <span
+class="math display"><em>Δ</em><em>K</em><sub><em>t</em></sub> = <em>s</em><sub><em>t</em></sub><em>Y</em><sub><em>t</em></sub> − <em>δ</em><sub><em>t</em></sub><em>K</em><sub><em>t</em></sub></span>
+再用 <span
+class="math inline"><em>Y</em><sub><em>t</em></sub> = <em>F</em>(<em>K</em><sub><em>t</em></sub>,<em>L</em><sub><em>t</em></sub><em>E</em><sub><em>t</em></sub>)</span>
+代入上式，就得到离散情形下的总资本增长方程： <span
+class="math display"><em>Δ</em><em>K</em><sub><em>t</em></sub> = <em>s</em><sub><em>t</em></sub><em>F</em>(<em>K</em><sub><em>t</em></sub>,<em>L</em><sub><em>t</em></sub><em>E</em><sub><em>t</em></sub>) − <em>δ</em><sub><em>t</em></sub><em>K</em><sub><em>t</em></sub>.</span></p>
+<p>连续情形的总资本增长方程同理可得： <span class="math display">$$
+\frac{dK_t}{dt}=s_tF(K_t,L_tE_t)-\delta_tK_t.
+$$</span></p>
+<h3 id="人均资本增长方程">3.人均资本增长方程</h3>
+<p>从总资本增长方程出发，我们不难得到人均资本增长方程。</p>
+<p>离散情形的人均资本增长方程： <span class="math display">$$
+\Delta k_t=\frac{1}{n_tg_t+n_t+g_t+1}[s_tf(k_t)-(\delta_t+n_t+g_t)k_t].
+$$</span> <em>证明：</em> <span class="math display">$$
+\begin{align*}
+    \Delta k_t
+    =&amp;\Delta\left(\frac{K_t}{L_tE_t}\right)
+    =\frac{(\Delta K_t)L_tE_t-K_t[(\Delta L_t)E_t+L_t\Delta
+E_t]}{(L_{t+1}E_{t+1})(L_tE_t)}\\
+    =&amp;\frac{L_tE_t}{L_{t+1}E_{t+1}}\frac{(\Delta
+K_t)L_tE_t-K_t[(\Delta L_t)E_t+L_t\Delta E_t]}{(L_tE_t)^2}\\
+    =&amp;\frac{L_tE_t}{L_{t+1}E_{t+1}}\left[\frac{1}{L_tE_t}(s_tF(K_t,L_tE_t)-\delta_tK_t)-\frac{K_t}{L_tE_t}\left(\frac{\Delta
+L_t}{L_t}+\frac{\Delta
+E_t}{E_t}\right)\right]\;\text{(代入总资本增长方程)}\\
+    =&amp;\frac{L_tE_t}{L_{t+1}E_{t+1}}\left[s_tF\left(\frac{K_t}{L_tE_t},1\right)-\delta_t\frac{K_t}{L_tE_t}-\frac{K_t}{L_tE_t}\left(\frac{\Delta
+L_t}{L_t}+\frac{\Delta
+E_t}{E_t}\right)\right]\;\text{(由生产函数的齐次性)}\\
+    =&amp;\frac{L_tE_t}{L_{t+1}E_{t+1}}[s_tf(k_t)-(\delta_t+n_t+g_t)k_t]\\
+    =&amp;\frac{1}{n_tg_t+n_t+g_t+1}[s_tf(k_t)-(\delta_t+n_t+g_t)k_t].
+\end{align*}
+$$</span> <em>证毕。</em></p>
+<p>连续情形的人均资本增长方程： <span class="math display">$$
+\frac{dk_t}{dt}=s_tf(k_t)-(\delta_t+n_t+g_t)k_t.
+$$</span> <em>证明：</em> <span class="math display">$$
+\begin{align*}
+    \frac{dk_t}{dt}
+    =&amp;\left(\frac{K_t}{L_tE_t}\right)'
+    =\frac{K'_tL_tE_t-K_t(L'_tE_t+L_tE'_t)}{(L_tE_t)^2}\\
+    =&amp;\frac{1}{L_tE_t}(s_tF(K_t,L_tE_t)-\delta_tK_t)-\frac{K_t}{L_tE_t}\left(\frac{L'_t}{L_t}+\frac{E'_t}{E_t}\right)\;\text{(代入总资本增长方程)}\\
+    =&amp;s_tF\left(\frac{K_t}{L_tE_t},1\right)-\delta_t\frac{K_t}{L_tE_t}-\frac{K_t}{L_tE_t}\left(\frac{L'_t}{L_t}+\frac{E'_t}{E_t}\right)\;\text{(由生产函数的齐次性)}\\
+    =&amp;s_tf(k_t)-(\delta_t+n_t+g_t)k_t.
+\end{align*}
+$$</span> <em>证毕。</em></p>
+<p>连续情形的人均资本增长方程是 Solow 模型最常见的表述。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%BB%8F%E6%B5%8E%E5%AD%A6/" class="category-chain-item">经济学</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%A5%BF%E6%96%B9%E7%BB%8F%E6%B5%8E%E5%AD%A6/" class="print-no-link">#西方经济学</a>
+      
+        <a href="/tags/%E5%AE%8F%E8%A7%82%E7%BB%8F%E6%B5%8E%E5%AD%A6/" class="print-no-link">#宏观经济学</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Solow 增长模型</div>
+      <div>https://fengnkt.github.io/2023/02/11/solow-model/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Feng</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年2月11日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/02/06/qq-bot-tutorial/" title="QQ机器人搭建教程">
+                        <span class="hidden-mobile">QQ机器人搭建教程</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
