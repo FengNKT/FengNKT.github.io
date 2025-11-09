@@ -27,7 +27,7 @@
 <meta property="og:description" content="本文先简要阐述现在流行的QQ机器人的工作原理，再介绍一个机器人搭建案例。 要编写一个QQ机器人，至少需要实现两种功能：  机器人和QQ服务器之间的通信。 机器人对QQ消息的处理。  一、机器人和QQ服务器之间的通信 机器人和QQ服务器之间有以下几种通信方式。 1.通信方式1：直接通信  flowchart LR id1(QQ服务器)-- QQ协议 ---id2(机器人)  QQ客户端与服务端之间依">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-02-06T13:09:36.000Z">
-<meta property="article:modified_time" content="2025-10-17T11:14:42.243Z">
+<meta property="article:modified_time" content="2025-11-09T07:34:47.236Z">
 <meta property="article:author" content="Feng">
 <meta property="article:tag" content="QQ机器人">
 <meta name="twitter:card" content="summary_large_image">
@@ -85,7 +85,13 @@
 
 
   
-<meta name="generator" content="Hexo 8.0.0"></head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-shiki-plugin@latest/lib/codeblock.css">
+<style>:root{--hl-color:#90a4ae;--hl-bg:#f6f8fa;--hltools-bg:#e6ebf1;--hltools-color:#90a4ae;--hlnumber-bg:#f6f8fa;--hlnumber-color:rgba(144,164,174,0.5);--hlscrollbar-bg:#dce4eb;--hlexpand-bg:linear-gradient(180deg,rgba(246,248,250,0.1),rgba(246,248,250,0.9))}</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 8.1.1"></head>
 
 
 <body>
@@ -223,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.6k 字
+          2.7k 字
         
       </span>
     
@@ -298,36 +304,37 @@ id1(QQ服务器)-- QQ协议 ---id2(机器人)
 <li>网络编程。为了发送QQ消息，我们需要编写相应代码来封装、发送QQ消息；为了接收QQ消息，我们也需要编写相应代码来接收、解析QQ消息。</li>
 </ul>
 <p>但是在编写机器人时，我们最应该关心的是机器人处理QQ消息的逻辑，而不是这些底层且复杂的工作。</p>
-<h3 id="通信方式2通过中介进行通信">2.通信方式2：通过中介进行通信</h3>
-<!-- > 通信方式2：【QQ服务器】---QQ协议---【中介】---库调用---【机器人】 -->
+<h3
+id="通信方式2通过中间层进行通信">2.通信方式2：通过中间层进行通信</h3>
+<!-- > 通信方式2：【QQ服务器】---QQ协议---【中间层】---库调用---【机器人】 -->
 <pre><code class=" mermaid">flowchart LR
-id1(QQ服务器)-- QQ协议 ---id2(中介)-- 库调用 ---id3(机器人)
+id1(QQ服务器)-- QQ协议 ---id2(中间层)-- 库调用 ---id3(机器人)
 </code></pre>
-<p>为了解决上述两个问题，我们可以编写一个<strong>中介</strong>。
-一方面，中介与QQ服务器进行具体的通信；另一方面，中介为我们提供简单易用的<strong>库接口</strong>。
-在编写机器人时，我们只需要直接调用这些库接口，让中介去进行具体的通信工作。
-这样，逆向工程和网络编程就由编写中介的程序员完成；而编写机器人的程序员不再需要操心这些底层问题，只需了解库接口如何调用。</p>
-<p>这种通信方式依然存在一个问题：通常来说，编写机器人和编写中介的语言应该是相同的。
-例如，我们使用的是实现为Java库的中介，那么我们只能使用Java语言来调用中介的接口。
+<p>为了解决上述两个问题，我们可以编写一个<strong>中间层</strong>。
+一方面，中间层与QQ服务器进行具体的通信；另一方面，中间层为我们提供简单易用的<strong>库接口</strong>。
+在编写机器人时，我们只需要直接调用这些库接口，让中间层去进行具体的通信工作。
+这样，逆向工程和网络编程就由编写中间层的程序员完成；而编写机器人的程序员不再需要操心这些底层问题，只需了解库接口如何调用。</p>
+<p>这种通信方式依然存在一个问题：通常来说，编写机器人和编写中间层的语言应该是相同的。
+例如，我们使用的是实现为Java库的中间层，那么我们只能使用Java语言来调用中间层的接口。
 于是，编写机器人的语言种类受到了限制。</p>
 <h3
-id="通信方式3通过中介和适配器进行通信">3.通信方式3：通过中介和适配器进行通信</h3>
-<!-- > 通信方式3：【QQ服务器】---QQ协议---【中介】---中介协议---【适配器】---库调用---【机器人】 -->
+id="通信方式3通过中间层和适配器进行通信">3.通信方式3：通过中间层和适配器进行通信</h3>
+<!-- > 通信方式3：【QQ服务器】---QQ协议---【中间层】---中间层协议---【适配器】---库调用---【机器人】 -->
 <pre><code class=" mermaid">flowchart LR
-id1(QQ服务器)-- QQ协议 ---id2(中介)-- 中介协议 ---id3(适配器)-- 库调用 ---id4(机器人)
+id1(QQ服务器)-- QQ协议 ---id2(中间层)-- 中间层协议 ---id3(适配器)-- 库调用 ---id4(机器人)
 </code></pre>
-<p>为了让各种语言都可以使用同一个中介，我们可以将中介实现为独立运行的软件，提供<strong>通用的本地网络接口</strong>（例如：HTTP，Websocket，Reverse
-Websocket），制订一套简单的中介接口协议。
-这样，不管我们使用什么编程语言，只要按协议调用这些接口，就可以使用中介的功能。</p>
-<p>但提升中介通用性带来的代价是，我们又要面对网络编程这个麻烦事（机器人和中介之间通过本地网络通信）。
-为了回避网络编程，我们可以为每种编程语言开发相应的<strong>适配器</strong>（实现为库），只需调用适配器提供的库接口，让适配器与中介进行沟通。</p>
+<p>为了让各种语言都可以使用同一个中间层，我们可以将中间层实现为独立运行的软件，提供<strong>通用的本地网络接口</strong>（例如：HTTP，Websocket，Reverse
+Websocket），制订一套简单的中间层接口协议。
+这样，不管我们使用什么编程语言，只要按协议调用这些接口，就可以使用中间层的功能。</p>
+<p>但提升中间层通用性带来的代价是，我们又要面对网络编程这个麻烦事（机器人和中间层之间通过本地网络通信）。
+为了回避网络编程，我们可以为每种编程语言开发相应的<strong>适配器</strong>（实现为库），只需调用适配器提供的库接口，让适配器与中间层进行沟通。</p>
 <blockquote>
 <p>这种通信方式的确比前一种更加迂回。
-如果我们为每一种编程语言开发相应的中介库而非适配器，就可以避免迂回。
-之所以不这么做，是因为开发中介的工作量要大于开发适配器，提高中介的通用性更加划算。</p>
+如果我们为每一种编程语言开发相应的中间层库而非适配器，就可以避免迂回。
+之所以不这么做，是因为开发中间层的工作量要大于开发适配器，提高中间层的通用性更加划算。</p>
 </blockquote>
-<h3 id="推荐的中介mirai">4.推荐的中介：Mirai</h3>
-<p>常见的中介有 Mirai，酷Q，oicq 等等。 本文推荐 <a
+<h3 id="推荐的中间层mirai">4.推荐的中间层：Mirai</h3>
+<p>常见的中间层有 Mirai，酷Q，oicq 等等。 本文推荐 <a
 target="_blank" rel="noopener" href="https://github.com/mamoe/mirai">Mirai</a> 的理由有：</p>
 <ol type="1">
 <li>全平台通用。Mirai 由 Kotlin 语言编写，可以运行在
@@ -345,7 +352,7 @@ mirai-console 中安装了 mirai-api-http 插件后，就可以提供本地网�
 <p>上述通信方式并不局限于和QQ服务器的通信。
 如果我们要编写其他聊天软件的机器人，通信方式也是类似的。
 有些聊天软件还提供公开的接口，例如钉钉、Discord。
-为这些软件编写机器人时，我们就不需要中介的帮助了。
+为这些软件编写机器人时，我们就不需要中间层的帮助了。
 例如钉钉机器人的通信方式是：
 <!-- > 通信方式（钉钉）：【钉钉服务器】---DingTalk协议---【适配器】---库调用---【机器人】 -->
 <pre><code class=" mermaid">flowchart LR
@@ -361,11 +368,11 @@ id1(钉钉服务器)-- DingTalk协议 ---id2(适配器)-- 库调用 ---id3(机�
 </ul>
 <p>于是，我们可以进一步抽象出一个具有上述功能的机器人框架。
 它不但可以帮助我们更简单地编写一个机器人，还可以让我们的机器人具有跨聊天平台的特性。</p>
-<p>机器人框架的种类十分丰富。选取哪一个机器人框架，取决于我们选用的语言、中介。</p>
+<p>机器人框架的种类十分丰富。选取哪一个机器人框架，取决于我们选用的语言、中间层。</p>
 <h2 id="三机器人搭建方案">三、机器人搭建方案</h2>
 <p>要搭建一个机器人，我们需要决定三件事：</p>
 <ol type="1">
-<li>选取什么中介。</li>
+<li>选取什么中间层。</li>
 <li>选取什么编程语言。</li>
 <li>选取什么机器人框架。</li>
 </ol>
@@ -378,7 +385,7 @@ id1(钉钉服务器)-- DingTalk协议 ---id2(适配器)-- 库调用 ---id3(机�
 <thead>
 <tr class="header">
 <th style="text-align: center;">序号</th>
-<th style="text-align: center;">中介</th>
+<th style="text-align: center;">中间层</th>
 <th style="text-align: center;">编程语言</th>
 <th style="text-align: center;">通信方式</th>
 <th style="text-align: center;">机器人框架</th>
@@ -465,8 +472,8 @@ id1(QQ服务器)-- QQ协议 ---id2(Mirai)-- Mirai API ---id3(AliceBot适配器)-
 <p>安装清单：</p>
 <ol type="1">
 <li>JRE：Java 运行时。Mirai 基于 Kotlin 开发，需要 JRE 环境。</li>
-<li>mirai-console：独立运行的中介。</li>
-<li>mirai-api-http：提供本地网络接口的中介插件。</li>
+<li>mirai-console：独立运行的中间层。</li>
+<li>mirai-api-http：提供本地网络接口的中间层插件。</li>
 <li>alicebot：机器人框架。</li>
 <li>alicebot-adapter-mirai：与 alicebot 配套的 mirai 适配器。</li>
 </ol>
@@ -961,5 +968,26 @@ target="_blank" rel="noopener" href="https://docs.alicebot.dev/guide/plugin-basi
   <noscript>
     <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
   </noscript>
-</body>
+<!-- hexo injector body_end start -->
+  <script>
+  const CODE_CONFIG = {
+    beautify: undefined,
+    highlightCopy: true,
+    highlightLang: undefined,
+    highlightHeightLimit: undefined,
+    isHighlightShrink: undefined,
+    copy: {
+      success: 'undefined',
+      error: 'undefined',
+      noSupport: 'undefined',
+    }
+  };
+  console.log(
+    `%c hexo-shiki-plugin %c v1.0.27 %c https://github.com/nova1751/hexo-shiki-plugin`,
+    "color: #fff; background: #5f5f5f",
+    "color: #fff; background: #80c8f8",
+    ""
+  );
+  </script>
+  <!-- hexo injector body_end end --></body>
 </html>
