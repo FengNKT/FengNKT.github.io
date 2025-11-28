@@ -233,15 +233,69 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
-        <a href="/2025/11/01/short-url/" target="_self">
-          短链服务
+        <a href="/2025/11/15/concurrent-snowflake/" target="_self">
+          并发雪花算法
         </a>
       </h2>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2025/11/01/short-url/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/11/15/concurrent-snowflake/" target="_self">
         <div>
-          短链服务 本文简要探讨短链服务（Short URL Service）的工作原理和实现思路，并提供一个具体实现：项目地址。 短链系统是一个常见的互联网基础服务，广泛用于二维码生成、短信链接、社交媒体跳转等场景。 它的核心目标是： 将冗长的原始 URL 转换为简短的访问链接，并能快速地解析还原。 短链服务的基本原理 我们首先来看一个短链的例子： 1https://example.com/2Yx4Gz
+          并发雪花算法 网上已经有很多雪花算法（Snowflake）的实现教程，但是这些教程大多没有考虑单机的并发带来的竞态条件，或者直接给整个方法加 synchronzied，使方法的运行串行化，大大降低了并发性能。 本文试图实现一个高并发性能的雪花算法。 雪花算法所需的基本常量如下：    常量名 含义 类型 值     TIMESTAMP_BITS 时间戳位数 int 41   WORKER_ID_B
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-11-15 21:19" pubdate>
+              2025-11-15
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" class="category-chain-item">计算机</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/shorto/statistics/" target="_self">
+          短链服务（数据统计篇）
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/shorto/statistics/" target="_self">
+        <div>
+          短链服务（数据统计篇） 短链服务除了生成和解析功能外，还应提供统计分析能力，例如：  PV、UV、来源统计； 地理位置与设备分布； 日志采集与异常监控。  解析模块和统计模块之间通过消息队列传递日志，可以很好地解耦模块，削峰填谷。 中间件使用 Kafka。
         </div>
       </a>
 
@@ -276,6 +330,257 @@
 
           </div>
         
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%9F%AD%E9%93%BE%E6%9C%8D%E5%8A%A1/">#短链服务</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/shorto/resolve/" target="_self">
+          短链服务（短链解析篇）
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/shorto/resolve/" target="_self">
+        <div>
+          短链服务（短链解析篇） 短链解析模块承担核心任务：根据短链码查找原始 URL。 在最初级的实现中，我们可以直接通过一条数据库查询实现： 1234567891011public String getLongUrl(String shortCode) &#123;    // 查询数据库    UrlMap urlMap = query().eq(&quot;short_code&quot;, sho
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-11-01 19:59" pubdate>
+              2025-11-01
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" class="category-chain-item">计算机</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%9F%AD%E9%93%BE%E6%9C%8D%E5%8A%A1/">#短链服务</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/shorto/backend/" target="_self">
+          短链服务（后台管理篇）
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/shorto/backend/" target="_self">
+        <div>
+          短链服务（后台管理篇）
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-11-01 19:59" pubdate>
+              2025-11-01
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" class="category-chain-item">计算机</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%9F%AD%E9%93%BE%E6%9C%8D%E5%8A%A1/">#短链服务</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/shorto/generator/" target="_self">
+          短链服务（短链生成篇）
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/shorto/generator/" target="_self">
+        <div>
+          短链服务（短链生成篇） 方案 1：长链哈希 + 截断 + 冲突处理 对长链做哈希（MD5、SHA256），取前 N 位作为短链。  优点：无需自增 ID，可批量离线生成，输入相同 URL 可得到相同短链。 缺点：哈希冲突不可避免，需查询数据库或缓存判断短链是否存在，安全性较低。  方案 2：数据库自增 ID + Base 62 编码 这是最容易想到的一种算法，也是本项目所使用的方案。 思路大致如下
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-11-01 19:59" pubdate>
+              2025-11-01
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" class="category-chain-item">计算机</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%9F%AD%E9%93%BE%E6%9C%8D%E5%8A%A1/">#短链服务</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/shorto/" target="_self">
+          短链服务
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/shorto/" target="_self">
+        <div>
+          短链服务 本系列文章主要探讨短链服务（Short URL Service）的工作原理和实现思路，并提供一个具体实现：Shorto。 共计包括以下几篇文章：  短链生成篇 短链解析篇 数据统计篇 后台管理篇  基本原理 短链系统是一个常见的互联网基础服务，广泛用于二维码生成、短信链接、社交媒体跳转等场景。 它的核心目标是： 将冗长的原始 URL 转换为简短的访问链接，并能快速地解析还原。 我们首先来
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-11-01 19:59" pubdate>
+              2025-11-01
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" class="category-chain-item">计算机</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%9F%AD%E9%93%BE%E6%9C%8D%E5%8A%A1/">#短链服务</a>
+            
+          </div>
         
       </div>
     </article>
