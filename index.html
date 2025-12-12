@@ -241,7 +241,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/io-model/" target="_self">
         <div>
-          IO 模型 在各类现代操作系统中，有五种常见的 IO 模型：    英文名 中文名     Blocking IO 阻塞 IO   Non-blocking IO 非阻塞 IO   IO multiplexing IO 多路复用   Signal-driven IO 信号驱动 IO   Asynchronous IO 异步 IO    阻塞 IO 与非阻塞 IO 阻塞 IO 的核心特点是，在执行
+          IO 模型 在各类现代操作系统中，有五种常见的 IO 模型：    英文名 中文名 类型     Blocking IO 阻塞 IO IO 执行模型   Non-blocking IO 非阻塞 IO IO 执行模型   IO multiplexing IO 多路复用 IO 事件模型   Signal-driven IO 信号驱动 IO IO 事件模型   Asynchronous IO 异步 IO
         </div>
       </a>
 
@@ -402,15 +402,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
-        <a href="/shorto/backend/" target="_self">
-          短链服务（后台管理篇）
+        <a href="/shorto/resolve/" target="_self">
+          短链服务（短链解析篇）
         </a>
       </h2>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/shorto/backend/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/shorto/resolve/" target="_self">
         <div>
-          短链服务（后台管理篇） 未完待续……
+          短链服务（短链解析篇） 短链解析模块承担核心任务：根据短链码查找原始 URL。 在最初级的实现中，我们可以直接通过一条数据库查询实现： 1234567891011public String getLongUrl(String shortCode) &#123;    // 查询数据库    UrlMap urlMap = query().eq(&quot;short_code&quot;, sho
         </div>
       </a>
 
@@ -463,15 +463,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
-        <a href="/shorto/resolve/" target="_self">
-          短链服务（短链解析篇）
+        <a href="/shorto/backend/" target="_self">
+          短链服务（后台管理篇）
         </a>
       </h2>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/shorto/resolve/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/shorto/backend/" target="_self">
         <div>
-          短链服务（短链解析篇） 短链解析模块承担核心任务：根据短链码查找原始 URL。 在最初级的实现中，我们可以直接通过一条数据库查询实现： 1234567891011public String getLongUrl(String shortCode) &#123;    // 查询数据库    UrlMap urlMap = query().eq(&quot;short_code&quot;, sho
+          短链服务（后台管理篇） 未完待续……
         </div>
       </a>
 

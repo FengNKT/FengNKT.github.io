@@ -19,15 +19,15 @@
   <meta name="author" content="Feng">
   <meta name="keywords" content="">
   
-    <meta name="description" content="IO 模型 在各类现代操作系统中，有五种常见的 IO 模型：    英文名 中文名     Blocking IO 阻塞 IO   Non-blocking IO 非阻塞 IO   IO multiplexing IO 多路复用   Signal-driven IO 信号驱动 IO   Asynchronous IO 异步 IO    阻塞 IO 与非阻塞 IO 阻塞 IO 的核心特点是，在执行">
+    <meta name="description" content="IO 模型 在各类现代操作系统中，有五种常见的 IO 模型：    英文名 中文名 类型     Blocking IO 阻塞 IO IO 执行模型   Non-blocking IO 非阻塞 IO IO 执行模型   IO multiplexing IO 多路复用 IO 事件模型   Signal-driven IO 信号驱动 IO IO 事件模型   Asynchronous IO 异步 IO">
 <meta property="og:type" content="article">
 <meta property="og:title" content="IO 模型">
 <meta property="og:url" content="https://fengnkt.github.io/io-model/index.html">
 <meta property="og:site_name" content="Feng 的个人博客">
-<meta property="og:description" content="IO 模型 在各类现代操作系统中，有五种常见的 IO 模型：    英文名 中文名     Blocking IO 阻塞 IO   Non-blocking IO 非阻塞 IO   IO multiplexing IO 多路复用   Signal-driven IO 信号驱动 IO   Asynchronous IO 异步 IO    阻塞 IO 与非阻塞 IO 阻塞 IO 的核心特点是，在执行">
+<meta property="og:description" content="IO 模型 在各类现代操作系统中，有五种常见的 IO 模型：    英文名 中文名 类型     Blocking IO 阻塞 IO IO 执行模型   Non-blocking IO 非阻塞 IO IO 执行模型   IO multiplexing IO 多路复用 IO 事件模型   Signal-driven IO 信号驱动 IO IO 事件模型   Asynchronous IO 异步 IO">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-12-11T12:48:37.000Z">
-<meta property="article:modified_time" content="2025-12-12T13:00:54.744Z">
+<meta property="article:modified_time" content="2025-12-12T15:26:20.477Z">
 <meta property="article:author" content="Feng">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -228,7 +228,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.5k 字
+          2.1k 字
         
       </span>
     
@@ -239,7 +239,7 @@
         
         
         
-          13 分钟
+          18 分钟
         
       </span>
     
@@ -288,38 +288,52 @@
 <tr class="header">
 <th>英文名</th>
 <th>中文名</th>
+<th>类型</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Blocking IO</td>
 <td>阻塞 IO</td>
+<td>IO 执行模型</td>
 </tr>
 <tr class="even">
 <td>Non-blocking IO</td>
 <td>非阻塞 IO</td>
+<td>IO 执行模型</td>
 </tr>
 <tr class="odd">
 <td>IO multiplexing</td>
 <td>IO 多路复用</td>
+<td>IO 事件模型</td>
 </tr>
 <tr class="even">
 <td>Signal-driven IO</td>
 <td>信号驱动 IO</td>
+<td>IO 事件模型</td>
 </tr>
 <tr class="odd">
 <td>Asynchronous IO</td>
 <td>异步 IO</td>
+<td>IO 执行模型</td>
 </tr>
 </tbody>
 </table>
+<p>这里的类型是我起的名字。 之所以进行这样一种分类，是因为阻塞
+IO、非阻塞 IO、异步 IO 会实际地读写数据，而 IO 多路复用与信号驱动 IO
+并不读写数据，只负责通知 IO 事件。 下面具体介绍五种模型：</p>
 <h2 id="阻塞-io-与非阻塞-io">阻塞 IO 与非阻塞 IO</h2>
-<p>阻塞 IO 的核心特点是，在执行 IO
-操作时，如果数据没有准备好，调用会一直等待，直到操作完成后才返回。</p>
-<p>在 Linux 中，无论阻塞 IO 还是非阻塞 IO，都使用同一个系统调用 <a
-target="_blank" rel="noopener" href="https://man7.org/linux/man-pages/man2/read.2.html"><code>read()</code></a>
-读取文件。 而具体是哪一种模式，主要是由 <code>&lt;fs.h&gt;</code>
-中的结构体 <code>file</code> 的 <code>f_flags</code> 字段决定的：</p>
+<p>阻塞 IO 与非阻塞 IO 的主要区别是:</p>
+<ul>
+<li>阻塞 IO：调用 IO
+操作时，如果数据没准备好，调用会一直等待，直到完成才返回。</li>
+<li>非阻塞 IO：调用 IO
+操作时，如果数据没准备好，调用会立即返回并告知用户程序，不会阻塞程序执行。</li>
+</ul>
+<p>在 Linux 中，无论阻塞 IO 还是非阻塞
+IO，都使用相同的系统调用读写文件。 而具体是哪一种 IO 模式，主要是由
+<code>&lt;fs.h&gt;</code> 中的结构体 <code>file</code> 的
+<code>f_flags</code> 字段决定的：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">file</span> &#123;</span><br>    ...<br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> f_flags;<br>    ...<br>&#125;;<br></code></pre></td></tr></table></figure>
 <p><code>f_flags</code> 是一个位掩码字段，每一个标志位分别表示一个状态。
 常用的标志位有：</p>
@@ -349,10 +363,10 @@ IO 事件。</p>
 select、poll、epoll 三种 IO 多路复用方案。 不论具体的实现如何，IO
 多路复用总是由以下两个部分组成：</p>
 <p><strong>第一部分：监听的文件集合</strong></p>
-<p>要使用 IO 多路复用，操作系统需要知道哪些文件需要监听。 Linux 的三种
-IO 多路复用方案分别使用了不同的方式来管理监听对象：</p>
+<p>要使用 IO 多路复用，操作系统必须知道需要监听哪些文件的哪些 IO 事件。
+Linux 的三种 IO 多路复用方案分别使用了不同的方式来管理监听对象：</p>
 <ol type="1">
-<li>select 使用位图 <code>fd_set</code> 存储数据结构。
+<li>select 使用位图 <code>fd_set</code> 存储监听对象。
 <code>fd_set</code> 包含一个 <code>unsigned long[]</code>
 数组，其中每个位对应一个文件描述符，容量默认为 1024。 如果 fd
 被加入集合，对应位为 1，否则为 0。 调用 <code>select</code>
@@ -363,13 +377,14 @@ IO 多路复用方案分别使用了不同的方式来管理监听对象：</p>
 <code>poll</code> 时，<code>pollfd</code> 作为参数传递给内核。 poll
 相较于 select，不再有监听数量的上限。</li>
 <li>epoll 使用红黑树 <code>struct rb_root_cached rbr</code>
-来存储监听的文件。 红黑树每个节点的类型是
+来存储监听对象。 红黑树每个节点的类型是
 <code>struct epitem</code>，存储了监听的 fd 和事件类型。
 用户程序不直接操作红黑树，而是通过系统调用 <code>epoll_ctl</code>
 注册文件。</li>
 </ol>
 <p><strong>第二部分：事件通知机制</strong></p>
-<p>事件通知机制是指内核如何告诉应用某个 fd 可读/可写。</p>
+<p>事件通知机制是指：内核如何告诉用户程序某个文件的发生了某个 IO 事件。
+Linux 的三种 IO 多路复用方案的事件通知机制如下：</p>
 <ol type="1">
 <li>select 的核心机制是轮询，会扫描每个 fd 看是否就绪，并将就绪 fd
 对应的位设置回 <code>fd_set</code>，最后返回就绪文件的数量。 select
@@ -409,8 +424,33 @@ IO，信号处理函数可能会被阻塞，导致线程无法正常运行。</p
 事件，避免低效率的阻塞。 不过，信号驱动 IO
 一般不会被使用，这主要是因为程序运行的流程很难控制。</p>
 <h2 id="异步-io">异步 IO</h2>
-<p>io_uring</p>
-<p>未完待续</p>
+<p>在讨论 IO 多路复用的时候，我们曾经说过 IO 多路复用通常要与非阻塞 IO
+搭配使用，这是因为 IO 多路复用只是一个 IO
+事件通知模型，并不负责数据的读写。
+用户程序减少了无效的阻塞时间，但频繁的读写操作仍然伴随着大量的上下文切换，这是一个较大的性能瓶颈。</p>
+<p>异步 IO 的核心思想则是则是尽可能减少上下文切换的次数：</p>
+<ul>
+<li>非阻塞提交：用户态可以直接提交 IO
+请求，不需要切换为内核态，不阻塞等待。</li>
+<li>内核直接操作用户缓冲区：IO
+完成后数据可以直接写入用户态内存，而无需经过额外拷贝。</li>
+<li>异步通知：在完成时通过最小开销的通知（一般是事件队列）处理结果。</li>
+</ul>
+<p>Linux 下对异步 IO 有三种实现：</p>
+<ol type="1">
+<li>native AIO（io_submit 与 libaio）。 io_submit 是 Linux
+内核提供的异步 IO 系统调用，libaio 是对其进行封装的用户态库。 native AIO
+最初是为块设备设计的，而对普通文件基本不支持真正异步。</li>
+<li>glibc 对 POSIX AIO 的实现。 其底层本质上依然是调用 native AIO 接口。
+如果内核不支持 native AIO，则退化为线程池模拟异步 IO。</li>
+<li>io_uring 与 liburing。 io_uring 是目前 Linux 中最强大的异步 IO
+接口。
+它的主要工作原理是提供了两个环形缓冲区：一个是提交队列，另一个是完成队列。
+用户程序将 IO 请求写入提交队列，从完成队列读取 IO 结果；
+内核从提交队列读取 IO 请求并处理，将结果写入完成队列。
+内核与用户程序共享这两个队列，避免了频繁的系统调用，大大减少了上下文切换的成本。</li>
+</ol>
+<p>关于 io_uring，参见<a href="/io-uring/">下一篇文章</a>。</p>
 
                 
               </div>
