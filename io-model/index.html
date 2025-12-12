@@ -19,25 +19,21 @@
   <meta name="author" content="Feng">
   <meta name="keywords" content="">
   
-    <meta name="description" content="短链服务 本系列文章主要探讨短链服务（Short URL Service）的工作原理和实现思路。  共计包括以下几篇文章：  短链生成篇 短链解析篇 数据统计篇（撰写中） 后台管理篇（撰写中）  基本原理 短链系统是一个常见的互联网基础服务，广泛用于二维码生成、短信链接、社交媒体跳转等场景。 它的核心目标是： 将冗长的原始 URL 转换为简短的访问链接，并能快速地解析还原。 我们首先来看一个短链的">
+    <meta name="description" content="IO 模型 在各类现代操作系统中，有五种常见的 IO 模型：    英文名 中文名     Blocking IO 阻塞 IO   Non-blocking IO 非阻塞 IO   IO multiplexing IO 多路复用   Signal-driven IO 信号驱动 IO   Asynchronous IO 异步 IO    阻塞 IO 与非阻塞 IO 阻塞 IO 的核心特点是，在执行">
 <meta property="og:type" content="article">
-<meta property="og:title" content="短链服务">
-<meta property="og:url" content="https://fengnkt.github.io/shorto/index.html">
+<meta property="og:title" content="IO 模型">
+<meta property="og:url" content="https://fengnkt.github.io/io-model/index.html">
 <meta property="og:site_name" content="Feng 的个人博客">
-<meta property="og:description" content="短链服务 本系列文章主要探讨短链服务（Short URL Service）的工作原理和实现思路。  共计包括以下几篇文章：  短链生成篇 短链解析篇 数据统计篇（撰写中） 后台管理篇（撰写中）  基本原理 短链系统是一个常见的互联网基础服务，广泛用于二维码生成、短信链接、社交媒体跳转等场景。 它的核心目标是： 将冗长的原始 URL 转换为简短的访问链接，并能快速地解析还原。 我们首先来看一个短链的">
+<meta property="og:description" content="IO 模型 在各类现代操作系统中，有五种常见的 IO 模型：    英文名 中文名     Blocking IO 阻塞 IO   Non-blocking IO 非阻塞 IO   IO multiplexing IO 多路复用   Signal-driven IO 信号驱动 IO   Asynchronous IO 异步 IO    阻塞 IO 与非阻塞 IO 阻塞 IO 的核心特点是，在执行">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://fengnkt.github.io/shorto/flowchart.svg">
-<meta property="og:image" content="https://fengnkt.github.io/shorto/architechture.png">
-<meta property="article:published_time" content="2025-11-01T11:59:44.000Z">
-<meta property="article:modified_time" content="2025-11-30T08:37:41.409Z">
+<meta property="article:published_time" content="2025-12-11T12:48:37.000Z">
+<meta property="article:modified_time" content="2025-12-12T13:00:54.744Z">
 <meta property="article:author" content="Feng">
-<meta property="article:tag" content="短链服务">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://fengnkt.github.io/shorto/flowchart.svg">
   
   
   
-  <title>短链服务 - Feng 的个人博客</title>
+  <title>IO 模型 - Feng 的个人博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -209,7 +205,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="短链服务"></span>
+            <span id="subtitle" data-typed-text="IO 模型"></span>
           
         </div>
 
@@ -220,8 +216,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-11-01 19:59" pubdate>
-          2025年11月1日 晚上
+        <time datetime="2025-12-11 20:48" pubdate>
+          2025年12月11日 晚上
         </time>
       </span>
     
@@ -232,7 +228,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          985 字
+          1.5k 字
         
       </span>
     
@@ -243,7 +239,7 @@
         
         
         
-          9 分钟
+          13 分钟
         
       </span>
     
@@ -280,124 +276,141 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">短链服务</h1>
+            <h1 id="seo-header">IO 模型</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="短链服务">短链服务</h1>
-<p>本系列文章主要探讨短链服务（Short URL Service）的工作原理和实现思路。
-<!-- ，并提供一个具体实现：[Shorto](https://github.com/FengNKT/shorto)。 -->
-共计包括以下几篇文章：</p>
-<ol type="1">
-<li><a href="/shorto/generator/">短链生成篇</a></li>
-<li><a href="/shorto/resolve/">短链解析篇</a></li>
-<li><a href="/shorto/statistics/">数据统计篇</a>（撰写中）</li>
-<li><a href="/shorto/backend/">后台管理篇</a>（撰写中）</li>
-</ol>
-<h2 id="基本原理">基本原理</h2>
-<p>短链系统是一个常见的互联网基础服务，广泛用于二维码生成、短信链接、社交媒体跳转等场景。
-它的核心目标是： <strong>将冗长的原始 URL
-转换为简短的访问链接，并能快速地解析还原。</strong></p>
-<p>我们首先来看一个短链的例子：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs URL">https://example.com/2Yx4Gz<br></code></pre></td></tr></table></figure>
-<p>其中，短链可以分为三个部分</p>
-<ul>
-<li>协议：使用 http 或 https；</li>
-<li>域名：例子中的 <code>example.com</code> 部分。
-短链服务通常使用较短的域名，例如新浪提供的 t.cn，Bitly 提供的
-bit.ly；</li>
-<li>短链码：例子中的 <code>2Yx4Gz</code> 部分。 短链码一般使用 Base62
-编码，即由数字、小写字母、大写字母组成。
-短链码越短越好，长度一般可以设计在 6-8 个字符。</li>
-</ul>
-<p>从功能上看，短链服务的核心逻辑其实非常简单： 服务维护一张“短链码 →
-原始链接”的映射表。
-当用户访问短链时，服务根据短链码查找对应的长链并返回一个重定向响应；
-如果映射不存在，则返回 404。</p>
-<figure>
-<img src="/shorto/flowchart.svg" srcset="/img/loading.gif" lazyload alt="核心逻辑" />
-<figcaption aria-hidden="true">核心逻辑</figcaption>
-</figure>
-<p>虽然原理简单，但要让系统在真实业务环境中应对高并发访问、系统故障等问题，还需要一系列优化。</p>
-<h2 id="服务特点分析">服务特点分析</h2>
-<p>短链服务主要包括以下几个模块：</p>
-<ol type="1">
-<li>核心服务模块，提供短链解析与生成的功能</li>
-<li>数据统计模块</li>
-<li>后台管理模块</li>
-</ol>
-<p>本项目的架构如下图所示：</p>
-<figure>
-<img src="/shorto/architechture.png" srcset="/img/loading.gif" lazyload alt="短链服务架构图" />
-<figcaption aria-hidden="true">短链服务架构图</figcaption>
-</figure>
-<p>而三个模块的设计方式，取决于具体的业务场景。
-总体而言，我们需要关注以下几个方面：</p>
-<ol type="1">
-<li><p><strong>性能</strong><br />
-不同的业务场景对解析和生成的性能要求有所不同。主要包括以下两种场景：</p>
-<ol type="1">
-<li>解析高性能，生成低性能：
-例如秒杀页面短链、营销短信短链、线下实体二维码等。
-这类短链主要由后台批量生成，因此生成阶段可以接受一定延迟；而用户访问短链后的跳转速度必须足够快。</li>
-<li>解析高性能，生成高性能： 例如社交媒体分享短链、实时动态二维码等。
-这类场景中短链生成由用户主动触发，对生成延迟更敏感，因此在解析与生成两个环节均需要高性能保证。
-这些短链的生成请求通常由用户主动发起，因而对延迟的忍受度较低。</li>
-</ol></li>
-<li><p><strong>映射关系</strong><br />
-长链与短链的映射方式通常包括两类：</p>
-<ol type="1">
-<li>一一映射：同一长链始终生成同一个短链。</li>
-<li>一对多映射：一条长链可以生成多条不同的短链。</li>
-</ol>
-<p>实际业务中第二种方式更为常见。</p></li>
-<li><p><strong>短链长度</strong><br />
-短链应尽可能简洁，以便于展示或嵌入二维码。
-然而，过短的短链会显著提高冲突概率并增加生成算法的复杂度，影响性能。
-关于短链长度和生成算法性能之间的权衡，后文将进一步讨论。</p></li>
-<li><p><strong>安全性</strong><br />
-短链的生成规则不应被轻易推测。</p></li>
-</ol>
-<h2 id="数据库设计">数据库设计</h2>
+                <h1 id="io-模型">IO 模型</h1>
+<p>在各类现代操作系统中，有五种常见的 IO 模型：</p>
 <table>
 <thead>
 <tr class="header">
-<th>表名</th>
-<th>注释</th>
-<th>用途</th>
+<th>英文名</th>
+<th>中文名</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>url_map</code></td>
-<td>URL 映射表</td>
-<td>记录<strong>短链-长链</strong>的映射关系</td>
+<td>Blocking IO</td>
+<td>阻塞 IO</td>
 </tr>
 <tr class="even">
-<td><code>user</code></td>
-<td>用户表</td>
-<td>记录用户信息</td>
+<td>Non-blocking IO</td>
+<td>非阻塞 IO</td>
 </tr>
 <tr class="odd">
-<td><code>role</code></td>
-<td>角色表</td>
-<td>系统提供的角色，包括普通用户、VIP 用户、管理员等</td>
+<td>IO multiplexing</td>
+<td>IO 多路复用</td>
 </tr>
 <tr class="even">
-<td><code>user_role</code></td>
-<td>用户-角色关联表</td>
-<td>记录用户-角色的关联信息</td>
+<td>Signal-driven IO</td>
+<td>信号驱动 IO</td>
 </tr>
 <tr class="odd">
-<td><code>segement_generator</code></td>
-<td>号段生成表</td>
-<td>提供生成号段的能力，用于号段方案</td>
+<td>Asynchronous IO</td>
+<td>异步 IO</td>
 </tr>
 </tbody>
 </table>
-<h2 id="下一篇文章">下一篇文章</h2>
-<p><a href="/shorto/generator/">短链生成篇</a></p>
+<h2 id="阻塞-io-与非阻塞-io">阻塞 IO 与非阻塞 IO</h2>
+<p>阻塞 IO 的核心特点是，在执行 IO
+操作时，如果数据没有准备好，调用会一直等待，直到操作完成后才返回。</p>
+<p>在 Linux 中，无论阻塞 IO 还是非阻塞 IO，都使用同一个系统调用 <a
+target="_blank" rel="noopener" href="https://man7.org/linux/man-pages/man2/read.2.html"><code>read()</code></a>
+读取文件。 而具体是哪一种模式，主要是由 <code>&lt;fs.h&gt;</code>
+中的结构体 <code>file</code> 的 <code>f_flags</code> 字段决定的：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">file</span> &#123;</span><br>    ...<br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> f_flags;<br>    ...<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p><code>f_flags</code> 是一个位掩码字段，每一个标志位分别表示一个状态。
+常用的标志位有：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-comment">// 访问模式</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> O_RDONLY	00000000    <span class="hljs-comment">// 只读模式</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> O_WRONLY	00000001    <span class="hljs-comment">// 只写模式</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> O_RDWR		00000002    <span class="hljs-comment">// 读写模式</span></span><br><br><span class="hljs-comment">// 文件状态标志</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> O_NONBLOCK  00004000    <span class="hljs-comment">// 非阻塞 IO</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> O_ASYNC		00020000    <span class="hljs-comment">// 信号驱动 IO</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> O_DIRECT	00040000    <span class="hljs-comment">// 直接 IO</span></span><br></code></pre></td></tr></table></figure>
+<p>其中，<code>O_NONBLOCK</code> 关闭则代表阻塞 IO
+模式，开启则代表非阻塞 IO 模式。
+如果要同时表示多种状态，可以用位或运算拼接。 例如只读 + 非阻塞 IO
+可以表示为 <code>O_RDONLY | O_NONBLOCK</code>。</p>
+<p>要启用非阻塞 IO 模式，本质上就是让文件描述符对应的
+<code>file-&gt;f_flags</code> 中的 <code>O_NONBLOCK</code> 开启。
+这主要有以下几种方式：</p>
+<ol type="1">
+<li>在打开文件时就指定模式： <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-type">int</span> fd = open(<span class="hljs-string">&quot;file.txt&quot;</span>, O_RDONLY | O_NONBLOCK);<br></code></pre></td></tr></table></figure></li>
+<li>打开文件后使用 <code>fcntl</code> 设置： <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-type">int</span> flags = fcntl(fd, F_GETFL, <span class="hljs-number">0</span>);      <span class="hljs-comment">// 获取当前标志</span><br>fcntl(fd, F_SETFL, flags | O_NONBLOCK); <span class="hljs-comment">// 设置非阻塞</span><br></code></pre></td></tr></table></figure></li>
+<li>对 socket 使用 <code>ioctl</code>： <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-type">int</span> flags = <span class="hljs-number">1</span>; <span class="hljs-comment">// 1 表示开启非阻塞</span><br>ioctl(fd, FIONBIO, &amp;flags); <br></code></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="io-多路复用">IO 多路复用</h2>
+<p>IO
+多路复用的核心理念，是由操作系统提供一套机制，方便单个线程同时监听多个
+IO 事件。</p>
+<!-- | 操作系统 | 实现 |
+| --- | --- |
+| Linux | select, poll, epoll |
+| Windows | selec, IOCP |
+| MacOS | ... | -->
+<p>在不同的操作系统下，IO 多路复用有不同的具体实现。 Linux 本身就提供了
+select、poll、epoll 三种 IO 多路复用方案。 不论具体的实现如何，IO
+多路复用总是由以下两个部分组成：</p>
+<p><strong>第一部分：监听的文件集合</strong></p>
+<p>要使用 IO 多路复用，操作系统需要知道哪些文件需要监听。 Linux 的三种
+IO 多路复用方案分别使用了不同的方式来管理监听对象：</p>
+<ol type="1">
+<li>select 使用位图 <code>fd_set</code> 存储数据结构。
+<code>fd_set</code> 包含一个 <code>unsigned long[]</code>
+数组，其中每个位对应一个文件描述符，容量默认为 1024。 如果 fd
+被加入集合，对应位为 1，否则为 0。 调用 <code>select</code>
+时，<code>fd_set</code> 作为参数传递给内核。 select
+的缺点是位图大小有上限，最多只能监听 1024 个文件。</li>
+<li>poll 使用数组 <code>pollfd</code> 替代
+<code>fd_set</code>，每个元素包含 fd + 关心的事件类型。 调用
+<code>poll</code> 时，<code>pollfd</code> 作为参数传递给内核。 poll
+相较于 select，不再有监听数量的上限。</li>
+<li>epoll 使用红黑树 <code>struct rb_root_cached rbr</code>
+来存储监听的文件。 红黑树每个节点的类型是
+<code>struct epitem</code>，存储了监听的 fd 和事件类型。
+用户程序不直接操作红黑树，而是通过系统调用 <code>epoll_ctl</code>
+注册文件。</li>
+</ol>
+<p><strong>第二部分：事件通知机制</strong></p>
+<p>事件通知机制是指内核如何告诉应用某个 fd 可读/可写。</p>
+<ol type="1">
+<li>select 的核心机制是轮询，会扫描每个 fd 看是否就绪，并将就绪 fd
+对应的位设置回 <code>fd_set</code>，最后返回就绪文件的数量。 select
+可以设置为阻塞、超时阻塞、非阻塞三种模式。</li>
+<li>poll 的核心机制和 select 一致，主要区别在于数据结构的不同。
+其轮询过程是遍历数组，检查每个 fd 是否就绪。</li>
+<li>epoll 的核心机制是内核维护就绪链表 + 回调通知。 用户程序调用
+<code>epoll_wait()</code> 等待事件。 当 fd 就绪时，内核通过回调直接将
+<code>epitem</code> 放入就绪链表，再将事件写入用户态数组
+<code>events</code>，最后返回就绪文件数量。 epoll
+采用的是真正的事件驱动模型。</li>
+</ol>
+<p>IO 多路复用是一种监听 IO 事件的模型，本身不提供读写文件的能力。
+通常来说，用户在获知了可读可写的事件集合之后，再去读写相应的文件。
+由于文件已经就绪，用户程序不会再长时间阻塞，由此提高了效率。</p>
+<p>所以 IO 多路复用与前面所说的阻塞 IO 和非阻塞 IO
+并不是同一层级的概念，后两者是读写方式的区别。 通常来说，IO
+多路复用要与非阻塞 IO 搭配使用。 如果使用阻塞
+IO，程序仍然可能由于一些原因被阻塞。
+例如，文件内容被其他线程读取，或者读取的长度超过了就绪数据的长度，等等。
+如果线程被阻塞，就违背了使用 IO 多路复用的初衷。</p>
+<p>不过，Linux 并不禁止 IO 多路复用与阻塞 IO
+搭配使用，但这没有什么意义，只会降低效率。 并且在较新版本的 Java NIO
+中，已经禁止这一搭配。</p>
+<h2 id="信号驱动-io">信号驱动 IO</h2>
+<p>信号驱动 IO
+的核心机制，是通过操作系统发送信号来通知程序数据已就绪。</p>
+<p>在 Linux 中开启信号驱动 IO，需要将 <code>f_flags</code> 的标志位
+<code>O_ASYNC</code> 设置为开启状态：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-type">int</span> flags = fcntl(fd, F_GETFL, <span class="hljs-number">0</span>);                  <span class="hljs-comment">// 获取当前标志</span><br>fcntl(fd, F_SETFL, flags | O_ASYNC | O_NONBLOCK);   <span class="hljs-comment">// 设置信号驱动与非阻塞</span><br></code></pre></td></tr></table></figure>
+<p>如果数据就绪，操作系统会发送 <code>SIGIO</code> 信号。
+通常还需要将文件设置为非阻塞 IO
+模式，这是因为信号处理函数是在异步上下文执行的。 如果是阻塞
+IO，信号处理函数可能会被阻塞，导致线程无法正常运行。</p>
+<p>可以看出，信号驱动 IO 和 IO
+多路复用是同一层级的概念，它们存在的目的都是为了监听 IO
+事件，避免低效率的阻塞。 不过，信号驱动 IO
+一般不会被使用，这主要是因为程序运行的流程很难控制。</p>
+<h2 id="异步-io">异步 IO</h2>
+<p>io_uring</p>
+<p>未完待续</p>
 
                 
               </div>
@@ -428,13 +441,6 @@ bit.ly；</li>
     </div>
   
   
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/%E7%9F%AD%E9%93%BE%E6%9C%8D%E5%8A%A1/" class="print-no-link">#短链服务</a>
-      
-    </div>
-  
 </div>
 
 
@@ -443,8 +449,8 @@ bit.ly；</li>
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>短链服务</div>
-      <div>https://fengnkt.github.io/shorto/</div>
+      <div>IO 模型</div>
+      <div>https://fengnkt.github.io/io-model/</div>
     </div>
     <div class="license-meta">
       
@@ -456,7 +462,7 @@ bit.ly；</li>
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年11月1日</div>
+          <div>2025年12月11日</div>
         </div>
       
       
@@ -488,18 +494,12 @@ bit.ly；</li>
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/shorto/generator/" title="短链服务（短链生成篇）">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">短链服务（短链生成篇）</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/02/11/solow-model/" title="Solow 增长模型">
-                        <span class="hidden-mobile">Solow 增长模型</span>
+                      <a href="/2025/11/15/concurrent-snowflake/" title="并发雪花算法">
+                        <span class="hidden-mobile">并发雪花算法</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

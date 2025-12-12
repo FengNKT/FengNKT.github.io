@@ -27,7 +27,7 @@
 <meta property="og:description" content="短链服务（短链生成篇） 方案 1：长链哈希 + 截断 + 冲突处理 对长链做哈希（MD5、SHA256），取前 N 位作为短链。  优点：无需自增 ID，可批量离线生成，输入相同 URL 可得到相同短链。 缺点：哈希冲突不可避免，需查询数据库或缓存判断短链是否存在，安全性较低。  方案 2：数据库自增 ID + Base 62 编码 这是最容易想到的一种算法，也是本项目所使用的方案。 思路大致如下">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-11-01T11:59:45.000Z">
-<meta property="article:modified_time" content="2025-11-26T09:00:17.523Z">
+<meta property="article:modified_time" content="2025-11-30T08:36:51.925Z">
 <meta property="article:author" content="Feng">
 <meta property="article:tag" content="短链服务">
 <meta name="twitter:card" content="summary_large_image">
@@ -229,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          978 字
+          988 字
         
       </span>
     
@@ -419,6 +419,8 @@ class="math inline"><em>y</em></span></th>
 <p>但是，即便我们使用分布式 ID 生成机制，单机环境下多个线程并发生成 ID
 时仍可能出现竞态条件。 我的另一篇文章 <a
 href="!--swig￼4--">并发雪花算法</a> 实现了基于 CAS 的 ID 生成算法。</p>
+<h2 id="下一篇文章">下一篇文章</h2>
+<p><a href="/shorto/resolve/">短链解析篇</a></p>
 
                 
               </div>
@@ -509,9 +511,9 @@ href="!--swig￼4--">并发雪花算法</a> 实现了基于 CAS 的 ID 生成算
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/shorto/backend/" title="短链服务（后台管理篇）">
+                      <a href="/shorto/resolve/" title="短链服务（短链解析篇）">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">短链服务（后台管理篇）</span>
+                        <span class="hidden-mobile">短链服务（短链解析篇）</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     

@@ -27,7 +27,7 @@
 <meta property="og:description" content="短链服务（短链解析篇） 短链解析模块承担核心任务：根据短链码查找原始 URL。 在最初级的实现中，我们可以直接通过一条数据库查询实现： 1234567891011public String getLongUrl(String shortCode) &#123;    &#x2F;&#x2F; 查询数据库    UrlMap urlMap &#x3D; query().eq(&quot;short_code&quot;, sho">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-11-01T11:59:46.000Z">
-<meta property="article:modified_time" content="2025-11-26T11:32:01.712Z">
+<meta property="article:modified_time" content="2025-11-30T08:41:12.170Z">
 <meta property="article:author" content="Feng">
 <meta property="article:tag" content="短链服务">
 <meta name="twitter:card" content="summary_large_image">
@@ -229,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          698 字
+          831 字
         
       </span>
     
@@ -240,7 +240,7 @@
         
         
         
-          6 分钟
+          7 分钟
         
       </span>
     
@@ -291,8 +291,9 @@
 通常短链服务的读写比例极不平衡，读操作远多于写操作。
 使用缓存后，我们可以将热点短链的映射直接存放在 Redis
 中，大幅提升性能。</p>
+<h2 id="多级缓存的问题">多级缓存的问题</h2>
 <p>但是缓存可能出现以下几个问题：</p>
-<h2 id="问题-1缓存穿透">问题 1：缓存穿透</h2>
+<h3 id="问题-1缓存穿透">问题 1：缓存穿透</h3>
 <p>缓存穿透是指用户请求的数据在缓存和数据库中都不存在，每次请求都会打到数据库上，造成压力。
 我们可以考虑如下几个方案：</p>
 <ol type="1">
@@ -301,12 +302,12 @@
 中缓存一个“空值”一段时间，避免反复访问数据库。</li>
 </ol>
 <p>但是这个场景不太适合使用 Bloom 过滤器。</p>
-<h2 id="问题-2缓存击穿">问题 2：缓存击穿</h2>
+<h3 id="问题-2缓存击穿">问题 2：缓存击穿</h3>
 <p>缓存击穿是指<strong>高并发访问</strong>且<strong>缓存重建业务较复杂</strong>的热点
 key 失效，无数的请求瞬间给数据库带来巨大的冲击。
 对于我们的服务而言，重建 key 只涉及一次数据库查询和一次 Redis
 写请求，比较简单，所以缓存击穿的风险不高。</p>
-<h2 id="问题-3缓存雪崩">问题 3：缓存雪崩</h2>
+<h3 id="问题-3缓存雪崩">问题 3：缓存雪崩</h3>
 <p>缓存雪崩是指在同一时段大量的缓存 key 同时失效或者 Redis
 服务宕机，导致大量请求到达数据库，带来巨大压力。
 对于我们的短链解析服务而言，缓存 key
@@ -327,6 +328,13 @@ key 失效，无数的请求瞬间给数据库带来巨大的冲击。
 数据库中可能有大量过期短链，这样可以首先排除 <code>status = 0</code>
 即过期的短链。 如果我们建立的是 <code>(expire_time, status)</code>
 索引，由于第一个字段的查询是范围查询，就没法充分利用最左匹配原则。</p>
+<p>为了避免多个实例重复运行清理任务，还需要加一个分布式锁，考虑使用
+Redisson。</p>
+<h2 id="响应式">响应式</h2>
+<p>上述短链解析过程中，如果能够在本地缓存查到映射，则可以直接返回结果。
+但如果要进行 Redis 或 MySQL 查询，则线程会阻塞住，降低吞吐能力。
+因此可以考虑响应式编程，使用 Spring WebFlux + Netty，在线程发送 IO
+请求后，直接切换到下一个请求进行处理。</p>
 
                 
               </div>
@@ -417,9 +425,9 @@ key 失效，无数的请求瞬间给数据库带来巨大的冲击。
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/shorto/statistics/" title="短链服务（数据统计篇）">
+                      <a href="/shorto/backend/" title="短链服务（后台管理篇）">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">短链服务（数据统计篇）</span>
+                        <span class="hidden-mobile">短链服务（后台管理篇）</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -427,8 +435,8 @@ key 失效，无数的请求瞬间给数据库带来巨大的冲击。
                   <article class="post-next col-6">
                     
                     
-                      <a href="/shorto/backend/" title="短链服务（后台管理篇）">
-                        <span class="hidden-mobile">短链服务（后台管理篇）</span>
+                      <a href="/shorto/generator/" title="短链服务（短链生成篇）">
+                        <span class="hidden-mobile">短链服务（短链生成篇）</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
